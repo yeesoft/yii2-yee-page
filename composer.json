@@ -1,0 +1,24 @@
+{
+  "name": "yeesoft/yii2-yee-page",
+  "description": "Yee Static Pages Module ",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "YeeSoft",
+      "email": "makitrataras@gmail.com"
+    }
+  ],
+  "require": {
+    "yeesoft/yii2-yee-base": "dev-master",
+    "yeesoft/yii2-yee-image": "dev-master",
+    "yeesoft/yii2-grid-plus": "dev-master",
+    "yeesoft/yii2-grid-quick-links": "dev-master",
+    "yiisoft/yii2-jui": "*",
+    "webvimark/grid-page-size": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "yeesoft\\page\\": ""
+    }
+  }
+}
