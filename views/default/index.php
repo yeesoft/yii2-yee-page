@@ -4,8 +4,8 @@ use webvimark\extensions\GridPageSize\GridPageSize;
 use yeesoft\grid\GridView;
 use yeesoft\gridquicklinks\GridQuickLinks;
 use yeesoft\helpers\Html;
+use yeesoft\models\User;
 use yeesoft\page\models\Page;
-use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'author_id',
-                        'filter' => yeesoft\usermanagement\models\User::getUsersList(),
+                        'filter' => User::getUsersList(),
                         'filterInputOptions' => [],
                         'value' => function (Page $model) {
                             return Html::a($model->author->username,
