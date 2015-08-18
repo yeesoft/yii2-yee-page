@@ -2,7 +2,7 @@
 
 namespace yeesoft\page\controllers;
 
-use yeesoft\base\controllers\admin\BaseController;
+use yeesoft\controllers\admin\BaseController;
 
 /**
  * Controller implements the CRUD actions for Page model.
