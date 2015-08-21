@@ -19,9 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
 
             <p>
-                <?= Html::a('Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+                <?= Html::a('Edit', ['/page/default/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
                 <?=
-                Html::a('Delete', ['delete', 'id' => $model->id],
+                Html::a('Delete', ['/page/default/delete', 'id' => $model->id],
                     [
                         'class' => 'btn btn-sm btn-default',
                         'data' => [
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
                 ?>
-                <?= Html::a('Add New', ['create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
+                <?= Html::a('Add New', ['/page/default/create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
             </p>
 
 
