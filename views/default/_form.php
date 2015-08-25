@@ -90,7 +90,9 @@ use yii\widgets\ActiveForm;
 
                         <?= $form->field($model, 'status')->dropDownList(Page::getStatusList(), ['class' => '']) ?>
 
-                        <?= $form->field($model, 'author_id')->dropDownList(User::getUsersList(), ['class' => '']) ?>
+                        <?php if (!$model->isNewRecord): ?>
+                            <?= $form->field($model, 'author_id')->dropDownList(User::getUsersList(), ['class' => '']) ?>
+                        <?php endif; ?>
 
                         <?= $form->field($model, 'comment_status')->dropDownList(Page::getCommentStatusList(), ['class' => '']) ?>
                     </div>
