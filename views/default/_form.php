@@ -1,11 +1,14 @@
 <?php
 
 use yeesoft\helpers\Html;
+use yeesoft\helpers\LanguageHelper;
 use yeesoft\media\widgets\TinyMce;
 use yeesoft\models\User;
 use yeesoft\page\models\Page;
+use yeesoft\widgets\ActiveForm;
+use yeesoft\widgets\LanguagePills;
+use yeesoft\Yee;
 use yii\jui\DatePicker;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\page\models\Page */
@@ -27,6 +30,10 @@ use yii\widgets\ActiveForm;
             <div class="panel panel-default">
                 <div class="panel-body">
 
+                    <?php if (LanguageHelper::isMultilingual($model)): ?>
+                        <?= LanguagePills::widget() ?>
+                    <?php endif; ?>
+
                     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
                     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
@@ -44,15 +51,15 @@ use yii\widgets\ActiveForm;
                 <div class="panel-body">
                     <div class="record-info">
                         <div class="form-group">
-                            <label class="control-label"
-                                   style="float: left; padding-right: 5px;"><?= $model->attributeLabels()['created_at'] ?>
-                                : </label>
+                            <label class="control-label" style="float: left; padding-right: 5px;">
+                                <?= $model->attributeLabels()['created_at'] ?>                                :
+                            </label>
                             <span><?= $model->createdDate ?></span>
                         </div>
                         <div class="form-group">
-                            <label class="control-label"
-                                   style="float: left; padding-right: 5px;"><?= $model->attributeLabels()['updated_at'] ?>
-                                : </label>
+                            <label class="control-label" style="float: left; padding-right: 5px;">
+                                <?= $model->attributeLabels()['updated_at'] ?>                                :
+                            </label>
                             <span><?= $model->updatedTime ?></span>
                         </div>
                         <div class="form-group">
@@ -63,19 +70,17 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="form-group">
                             <?php if ($model->isNewRecord): ?>
-                                <?= Html::submitButton('<span class="glyphicon glyphicon-plus-sign"></span> Create', ['class' => 'btn btn-primary']) ?>
-                                <?= Html::a('<span class="glyphicon glyphicon-remove"></span> Cancel', ['/page/default/index'], ['class' => 'btn btn-default',]) ?>
+                                <?= Html::submitButton(Yee::t('yee', 'Create'), ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a(Yee::t('yee', 'Cancel'), ['/page/default/index'], ['class' => 'btn btn-default',]) ?>
                             <?php else: ?>
-                                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span> Save', ['class' => 'btn btn-primary']) ?>
-                                <?= Html::a('<span class="glyphicon glyphicon-remove"></span> Delete',
-                                    ['/page/default/delete', 'id' => $model->id],
-                                    [
-                                        'class' => 'btn btn-default',
-                                        'data' => [
-                                            'confirm' => 'Are you sure you want to delete this item?',
-                                            'method' => 'post',
-                                        ],
-                                    ]) ?>
+                                <?= Html::submitButton(Yee::t('yee', 'Save'), ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a(Yee::t('yee', 'Delete'), ['/page/default/delete', 'id' => $model->id], [
+                                    'class' => 'btn btn-default',
+                                    'data' => [
+                                        'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -91,7 +96,7 @@ use yii\widgets\ActiveForm;
                         <?= $form->field($model, 'status')->dropDownList(Page::getStatusList(), ['class' => '']) ?>
 
                         <?php if (!$model->isNewRecord): ?>
-                            <?= $form->field($model, 'author_id')->dropDownList(User::getUsersList(), ['class' => '']) ?>
+                            <?= $form->field($model, 'updated_by')->dropDownList(User::getUsersList(), ['class' => '']) ?>
                         <?php endif; ?>
 
                         <?= $form->field($model, 'comment_status')->dropDownList(Page::getCommentStatusList(), ['class' => '']) ?>

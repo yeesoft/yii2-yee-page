@@ -13,28 +13,41 @@ class m150731_150101_create_page_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('page',
-            [
-                'id' => 'pk',
-                'author_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
-                'slug' => Schema::TYPE_STRING . '(200) NOT NULL DEFAULT ""',
-                'title' => Schema::TYPE_TEXT . ' NOT NULL',
-                'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "0" COMMENT "0-pending,1-published"',
-                'comment_status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-closed,1-open"',
-                'content' => Schema::TYPE_TEXT . ' NOT NULL',
-                'published_at' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
-                'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-                'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-                'revision' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT "1"',
-            ], $tableOptions);
+        $this->createTable('page', [
+            'id' => 'pk',
+            'created_by' => Schema::TYPE_INTEGER . '(11) NOT NULL',
+            'slug' => Schema::TYPE_STRING . '(200) NOT NULL DEFAULT ""',
+            'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "0" COMMENT "0-pending,1-published"',
+            'comment_status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-closed,1-open"',
+            'published_at' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
+            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'updated_by' => Schema::TYPE_INTEGER . '(11) DEFAULT NULL',
+            'revision' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT "1"',
+        ], $tableOptions);
 
         $this->createIndex('page_slug', 'page', 'slug');
         $this->createIndex('page_status', 'page', 'status');
-        $this->createIndex('page_author', 'page', 'author_id');
+        $this->createIndex('page_author', 'page', 'created_by');
+
+        $this->createTable('page_lang', [
+            'id' => 'pk',
+            'page_id' => Schema::TYPE_INTEGER . '(11) NOT NULL',
+            'language' => Schema::TYPE_STRING . '(6) NOT NULL',
+            'title' => Schema::TYPE_TEXT . ' NOT NULL',
+            'content' => Schema::TYPE_TEXT . ' DEFAULT NULL',
+        ], $tableOptions);
+
+
+        $this->createIndex('page_lang_post_id', 'page_lang', 'page_id');
+        $this->createIndex('page_lang_language', 'page_lang', 'language');
+        $this->addForeignKey('fk_page_lang', 'page_lang', 'page_id', 'page', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropForeignKey('fk_page_lang', 'page_lang');
+        $this->dropTable('page_lang');
         $this->dropTable('page');
     }
 }

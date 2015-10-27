@@ -2,8 +2,12 @@
 
 namespace yeesoft\page\models;
 
+use yeesoft\behaviors\MultilingualBehavior;
 use yeesoft\models\OwnerAccess;
 use yeesoft\models\User;
+use yeesoft\Yee;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -11,7 +15,6 @@ use yii\db\ActiveRecord;
  * This is the model class for table "page".
  *
  * @property integer $id
- * @property integer $author
  * @property string $slug
  * @property string $title
  * @property integer $status
@@ -20,6 +23,8 @@ use yii\db\ActiveRecord;
  * @property string $published_at
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property integer $revision
  */
 class Page extends ActiveRecord implements OwnerAccess
@@ -54,6 +59,19 @@ class Page extends ActiveRecord implements OwnerAccess
     {
         return [
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
+            'sluggable' => [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+            ],
+            'multilingual' => [
+                'class' => MultilingualBehavior::className(),
+                'langForeignKey' => 'page_id',
+                'tableName' => "{{%page_lang}}",
+                'attributes' => [
+                    'title', 'content',
+                ]
+            ],
         ];
     }
 
@@ -64,13 +82,12 @@ class Page extends ActiveRecord implements OwnerAccess
     {
         return [
             [['title', 'content'], 'required'],
-            [['author_id', 'status', 'comment_status', 'revision'], 'integer'],
+            [['created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
             [['title', 'content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['slug'], 'string', 'max' => 200],
             ['published_at', 'date', 'timestampAttribute' => 'published_at'],
             ['published_at', 'default', 'value' => time()],
-            ['author_id', 'default', 'value' => \Yii::$app->user->identity->id],
         ];
     }
 
@@ -80,17 +97,18 @@ class Page extends ActiveRecord implements OwnerAccess
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'author_id' => 'Author',
-            'slug' => 'Slug',
-            'title' => 'Title',
-            'status' => 'Status',
-            'comment_status' => 'Comment Status',
-            'content' => 'Content',
-            'published_at' => 'Published',
-            'created_at' => 'Created',
-            'updated_at' => 'Last Update',
-            'revision' => 'Revision',
+            'id' => Yee::t('yee', 'ID'),
+            'created_by' => Yee::t('yee', 'Author'),
+            'updated_by' => Yee::t('yee', 'Updated By'),
+            'slug' => Yee::t('yee', 'Slug'),
+            'title' => Yee::t('yee', 'Title'),
+            'status' => Yee::t('yee', 'Status'),
+            'comment_status' => Yee::t('yee', 'Comment Status'),
+            'content' => Yee::t('yee', 'Content'),
+            'published_at' => Yee::t('yee', 'Published'),
+            'created_at' => Yee::t('yee', 'Created'), '',
+            'updated_at' => Yee::t('yee', 'Updated'),
+            'revision' => Yee::t('yee', 'Revision'),
         ];
     }
 
@@ -105,7 +123,7 @@ class Page extends ActiveRecord implements OwnerAccess
 
     public function getAuthor()
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     public function getPublishedDate()
@@ -155,8 +173,8 @@ class Page extends ActiveRecord implements OwnerAccess
     public static function getStatusList()
     {
         return [
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_PUBLISHED => 'Published'
+            self::STATUS_PENDING => Yee::t('yee', 'Pending'),
+            self::STATUS_PUBLISHED => Yee::t('yee', 'Published'),
         ];
     }
 
@@ -167,8 +185,8 @@ class Page extends ActiveRecord implements OwnerAccess
     public static function getStatusOptionsList()
     {
         return [
-            [self::STATUS_PENDING, 'Pending', 'default'],
-            [self::STATUS_PUBLISHED, 'Published', 'primary']
+            [self::STATUS_PENDING, Yee::t('yee', 'Pending'), 'default'],
+            [self::STATUS_PUBLISHED, Yee::t('yee', 'Published'), 'primary']
         ];
     }
 
@@ -179,8 +197,8 @@ class Page extends ActiveRecord implements OwnerAccess
     public static function getCommentStatusList()
     {
         return [
-            self::COMMENT_STATUS_OPEN => 'Open',
-            self::COMMENT_STATUS_CLOSED => 'Closed'
+            self::COMMENT_STATUS_OPEN => Yee::t('yee', 'Open'),
+            self::COMMENT_STATUS_CLOSED => Yee::t('yee', 'Closed')
         ];
     }
 
@@ -199,6 +217,6 @@ class Page extends ActiveRecord implements OwnerAccess
      */
     public static function getOwnerField()
     {
-        return 'author_id';
+        return 'created_by';
     }
 }

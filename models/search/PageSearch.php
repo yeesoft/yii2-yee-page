@@ -21,7 +21,7 @@ class PageSearch extends Page
     public function rules()
     {
         return [
-            [['id', 'author_id', 'status', 'comment_status', 'revision'], 'integer'],
+            [['id', 'created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
             [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -44,7 +44,7 @@ class PageSearch extends Page
      */
     public function search($params)
     {
-        $query = Page::find();
+        $query = Page::find()->joinWith('translations');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -68,7 +68,8 @@ class PageSearch extends Page
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'author_id' => $this->author_id,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
             'status' => $this->status,
             'comment_status' => $this->comment_status,
             'created_at' => $this->created_at,

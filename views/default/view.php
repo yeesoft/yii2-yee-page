@@ -2,13 +2,15 @@
 
 use yeesoft\helpers\Html;
 use yeesoft\models\User;
+use yeesoft\page\PageModule;
+use yeesoft\Yee;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\page\models\Page */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Pages', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => PageModule::t('page', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-view">
@@ -19,28 +21,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
 
             <p>
-                <?= Html::a('Edit', ['/page/default/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
-                <?=
-                Html::a('Delete', ['/page/default/delete', 'id' => $model->id],
-                    [
-                        'class' => 'btn btn-sm btn-default',
-                        'data' => [
-                            'confirm' => 'Are you sure you want to delete this user?',
-                            'method' => 'post',
-                        ],
-                    ])
-                ?>
-                <?= Html::a('Add New', ['/page/default/create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
+                <?= Html::a(Yee::t('yee', 'Edit'), ['/page/default/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+                <?= Html::a(Yee::t('yee', 'Delete'), ['/page/default/delete', 'id' => $model->id], [
+                    'class' => 'btn btn-sm btn-default',
+                    'data' => [
+                        'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
+                ]) ?>
+                <?= Html::a(Yee::t('yee', 'Add New'), ['/page/default/create'], ['class' => 'btn btn-sm btn-primary pull-right']) ?>
             </p>
 
 
-            <?=
-            DetailView::widget([
+            <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     'id',
                     [
-                        'attribute' => 'author',
+                        'attribute' => 'created_by',
                         'value' => $model->author->username,
                         'visible' => User::hasPermission('viewUserEmail'),
                     ],
@@ -79,6 +77,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $model->content ?>
         </div>
     </div>
-
 
 </div>

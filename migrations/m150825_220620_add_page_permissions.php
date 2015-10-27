@@ -8,7 +8,6 @@ class m150825_220620_add_page_permissions extends Migration
 
     public function up()
     {
-
         $this->insert('auth_item_group', ['code' => 'pageManagement', 'name' => 'Page Management', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
 
         $this->insert('auth_item', ['name' => '/admin/page/*', 'type' => '3', 'created_at' => '1440180000', 'updated_at' => '1440180000']);

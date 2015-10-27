@@ -6,6 +6,8 @@ use yeesoft\grid\GridView;
 use yeesoft\helpers\Html;
 use yeesoft\models\User;
 use yeesoft\page\models\Page;
+use yeesoft\page\PageModule;
+use yeesoft\Yee;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -13,7 +15,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel yeesoft\page\models\search\PageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pages';
+$this->title = PageModule::t('page', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-index">
@@ -21,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-12">
             <h3 class="lte-hide-title page-title"><?= Html::encode($this->title) ?></h3>
-            <?= Html::a('Add New', ['/page/default/create'], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?= Html::a(Yee::t('yee', 'Add New'), ['/page/default/create'], ['class' => 'btn btn-sm btn-primary']) ?>
         </div>
     </div>
 
@@ -30,17 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="row">
                 <div class="col-sm-6">
-                    <?=
-                    GridQuickLinks::widget([
+                    <?= GridQuickLinks::widget([
                         'model' => Page::class,
                         'searchModel' => $searchModel,
                         'labels' => [
-                            'all' => 'All',
-                            'active' => 'Published',
-                            'inactive' => 'Pending',
-                        ]
-                    ])
-                    ?>
+                            'all' => Yee::t('yee', 'All'),
+                            'active' => Yee::t('yee', 'Published'),
+                            'inactive' => Yee::t('yee', 'Pending'),
+                        ],
+                    ]) ?>
                 </div>
 
                 <div class="col-sm-6 text-right">
@@ -48,11 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
 
-            <?php
-            Pjax::begin([
-                'id' => 'page-grid-pjax',
-            ])
-            ?>
+            <?php Pjax::begin(['id' => 'page-grid-pjax']) ?>
 
             <?=
             GridView::widget([
@@ -62,9 +58,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'bulkActionOptions' => [
                     'gridId' => 'page-grid',
                     'actions' => [
-                        Url::to(['bulk-activate']) => 'Publish',
-                        Url::to(['bulk-deactivate']) => 'Unpublish',
-                        Url::to(['bulk-delete']) => 'Delete',
+                        Url::to(['bulk-activate']) => Yee::t('yee', 'Publish'),
+                        Url::to(['bulk-deactivate']) => Yee::t('yee', 'Unpublish'),
+                        Url::to(['bulk-delete']) => Yii::t('yii', 'Delete'),
                     ]
                 ],
                 'columns' => [
@@ -73,17 +69,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'yeesoft\grid\columns\TitleActionColumn',
                         'controller' => '/page/default',
                         'title' => function (Page $model) {
-                            return Html::a($model->title,
-                                ['/page/default/view', 'id' => $model->id], ['data-pjax' => 0]);
+                            return Html::a($model->title, ['/page/default/view', 'id' => $model->id], ['data-pjax' => 0]);
                         },
                     ],
                     [
-                        'attribute' => 'author_id',
+                        'attribute' => 'created_by',
                         'filter' => User::getUsersList(),
                         'filterInputOptions' => [],
                         'value' => function (Page $model) {
                             return Html::a($model->author->username,
-                                ['user/view', 'id' => $model->author_id],
+                                ['user/view', 'id' => $model->created_by],
                                 ['data-pjax' => 0]);
                         },
                         'format' => 'raw',

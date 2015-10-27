@@ -2,6 +2,8 @@
 
 namespace yeesoft\page\models;
 
+use omgdef\multilingual\MultilingualTrait;
+
 /**
  * This is the ActiveQuery class for [[Page]].
  *
@@ -9,6 +11,8 @@ namespace yeesoft\page\models;
  */
 class PageQuery extends \yii\db\ActiveQuery
 {
+
+    use MultilingualTrait;
 
     public function active()
     {

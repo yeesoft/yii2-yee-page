@@ -1,14 +1,16 @@
 <?php
 
+use yeesoft\page\PageModule;
+use yeesoft\Yee;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\page\models\Page */
 
-$this->title = 'Update Page: ' . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Pages', 'url' => ['index']];
+$this->title = Yee::t('yee', 'Update "{item}"', ['item' => $model->title]);
+$this->params['breadcrumbs'][] = ['label' => PageModule::t('page', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yee::t('yee', 'Update');
 ?>
 
 <div class="page-update">
