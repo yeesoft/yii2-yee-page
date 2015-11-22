@@ -7,7 +7,6 @@ use yeesoft\models\User;
 use yeesoft\page\models\Page;
 use yeesoft\widgets\ActiveForm;
 use yeesoft\widgets\LanguagePills;
-use yeesoft\Yee;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
@@ -41,7 +40,6 @@ use yii\jui\DatePicker;
                     <?= $form->field($model, 'content')->widget(TinyMce::className()); ?>
 
                 </div>
-
             </div>
         </div>
 
@@ -50,31 +48,38 @@ use yii\jui\DatePicker;
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="record-info">
-                        <div class="form-group">
-                            <label class="control-label" style="float: left; padding-right: 5px;">
-                                <?= $model->attributeLabels()['created_at'] ?>                                :
-                            </label>
-                            <span><?= $model->createdDate ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" style="float: left; padding-right: 5px;">
-                                <?= $model->attributeLabels()['updated_at'] ?>                                :
-                            </label>
-                            <span><?= $model->updatedTime ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" style="float: left; padding-right: 5px;">
-                                <?= $model->attributeLabels()['revision'] ?> :
-                            </label>
-                            <span><?= $model->getRevision() ?></span>
-                        </div>
+                        <?php if (!$model->isNewRecord): ?>
+
+                            <div class="form-group clearfix">
+                                <label class="control-label" style="float: left; padding-right: 5px;">
+                                    <?= $model->attributeLabels()['created_at'] ?> :
+                                </label>
+                                <span><?= "{$model->createdDate} {$model->createdTime}" ?></span>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label class="control-label" style="float: left; padding-right: 5px;">
+                                    <?= $model->attributeLabels()['updated_at'] ?> :
+                                </label>
+                                <span><?= "{$model->updatedDate} {$model->updatedTime}" ?></span>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label class="control-label" style="float: left; padding-right: 5px;">
+                                    <?= $model->attributeLabels()['updated_by'] ?> :
+                                </label>
+                                <span><?= $model->updatedBy->username ?></span>
+                            </div>
+
+                        <?php endif; ?>
+                        
                         <div class="form-group">
                             <?php if ($model->isNewRecord): ?>
-                                <?= Html::submitButton(Yee::t('yee', 'Create'), ['class' => 'btn btn-primary']) ?>
-                                <?= Html::a(Yee::t('yee', 'Cancel'), ['/page/default/index'], ['class' => 'btn btn-default',]) ?>
+                                <?= Html::submitButton(Yii::t('yee', 'Create'), ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a(Yii::t('yee', 'Cancel'), ['/page/default/index'], ['class' => 'btn btn-default',]) ?>
                             <?php else: ?>
-                                <?= Html::submitButton(Yee::t('yee', 'Save'), ['class' => 'btn btn-primary']) ?>
-                                <?= Html::a(Yee::t('yee', 'Delete'), ['/page/default/delete', 'id' => $model->id], [
+                                <?= Html::submitButton(Yii::t('yee', 'Save'), ['class' => 'btn btn-primary']) ?>
+                                <?= Html::a(Yii::t('yee', 'Delete'), ['/page/default/delete', 'id' => $model->id], [
                                     'class' => 'btn btn-default',
                                     'data' => [
                                         'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
@@ -91,12 +96,13 @@ use yii\jui\DatePicker;
                 <div class="panel-body">
 
                     <div class="record-info">
-                        <?= $form->field($model, 'published_at')->widget(DatePicker::className(), ['options' => ['class' => 'form-control']]); ?>
+                        <?= $form->field($model, 'published_at')
+                                ->widget(DatePicker::className(), ['dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]); ?>
 
                         <?= $form->field($model, 'status')->dropDownList(Page::getStatusList(), ['class' => '']) ?>
 
                         <?php if (!$model->isNewRecord): ?>
-                            <?= $form->field($model, 'updated_by')->dropDownList(User::getUsersList(), ['class' => '']) ?>
+                            <?= $form->field($model, 'created_by')->dropDownList(User::getUsersList(), ['class' => '']) ?>
                         <?php endif; ?>
 
                         <?= $form->field($model, 'comment_status')->dropDownList(Page::getCommentStatusList(), ['class' => '']) ?>

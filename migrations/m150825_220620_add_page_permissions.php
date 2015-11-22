@@ -24,7 +24,7 @@ class m150825_220620_add_page_permissions extends Migration
         $this->insert('auth_item', ['name' => '/admin/page/default/update', 'type' => '3', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
         $this->insert('auth_item', ['name' => '/admin/page/default/view', 'type' => '3', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
 
-        $this->insert('auth_item', ['name' => 'accessAllPages', 'type' => '2', 'description' => 'Manage other users\' pages', 'group_code' => 'pageManagement', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
+        $this->insert('auth_item', ['name' => 'fullPageAccess', 'type' => '2', 'description' => 'Manage other users\' pages', 'group_code' => 'pageManagement', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
         $this->insert('auth_item', ['name' => 'createPages', 'type' => '2', 'description' => 'Create pages', 'group_code' => 'pageManagement', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
         $this->insert('auth_item', ['name' => 'deletePages', 'type' => '2', 'description' => 'Delete pages', 'group_code' => 'pageManagement', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
         $this->insert('auth_item', ['name' => 'editPages', 'type' => '2', 'description' => 'Edit pages', 'group_code' => 'pageManagement', 'created_at' => '1440180000', 'updated_at' => '1440180000']);
@@ -47,7 +47,7 @@ class m150825_220620_add_page_permissions extends Migration
         $this->insert('auth_item_child', ['parent' => 'editPages', 'child' => 'viewPages']);
 
         $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'createPages']);
-        $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'accessAllPages']);
+        $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'fullPageAccess']);
         $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'deletePages']);
         $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'editPages']);
         $this->insert('auth_item_child', ['parent' => 'administrator', 'child' => 'viewPages']);
@@ -56,7 +56,7 @@ class m150825_220620_add_page_permissions extends Migration
     public function down()
     {
         $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'createPages']);
-        $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'accessAllPages']);
+        $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'fullPageAccess']);
         $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'deletePages']);
         $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'editPages']);
         $this->delete('auth_item_child', ['parent' => 'administrator', 'child' => 'viewPages']);
@@ -91,7 +91,7 @@ class m150825_220620_add_page_permissions extends Migration
         $this->delete('auth_item', ['name' => '/admin/page/default/update']);
         $this->delete('auth_item', ['name' => '/admin/page/default/view']);
 
-        $this->delete('auth_item', ['name' => 'accessAllPages']);
+        $this->delete('auth_item', ['name' => 'fullPageAccess']);
         $this->delete('auth_item', ['name' => 'createPages']);
         $this->delete('auth_item', ['name' => 'deletePages']);
         $this->delete('auth_item', ['name' => 'editPages']);

@@ -6,8 +6,7 @@ use yeesoft\grid\GridView;
 use yeesoft\helpers\Html;
 use yeesoft\models\User;
 use yeesoft\page\models\Page;
-use yeesoft\page\PageModule;
-use yeesoft\Yee;
+use Yii;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
@@ -15,7 +14,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel yeesoft\page\models\search\PageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = PageModule::t('page', 'Pages');
+$this->title = Yii::t('yee/page', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-index">
@@ -23,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-12">
             <h3 class="lte-hide-title page-title"><?= Html::encode($this->title) ?></h3>
-            <?= Html::a(Yee::t('yee', 'Add New'), ['/page/default/create'], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?= Html::a(Yii::t('yee', 'Add New'), ['/page/default/create'], ['class' => 'btn btn-sm btn-primary']) ?>
         </div>
     </div>
 
@@ -36,9 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'model' => Page::class,
                         'searchModel' => $searchModel,
                         'labels' => [
-                            'all' => Yee::t('yee', 'All'),
-                            'active' => Yee::t('yee', 'Published'),
-                            'inactive' => Yee::t('yee', 'Pending'),
+                            'all' => Yii::t('yee', 'All'),
+                            'active' => Yii::t('yee', 'Published'),
+                            'inactive' => Yii::t('yee', 'Pending'),
                         ],
                     ]) ?>
                 </div>
@@ -58,8 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'bulkActionOptions' => [
                     'gridId' => 'page-grid',
                     'actions' => [
-                        Url::to(['bulk-activate']) => Yee::t('yee', 'Publish'),
-                        Url::to(['bulk-deactivate']) => Yee::t('yee', 'Unpublish'),
+                        Url::to(['bulk-activate']) => Yii::t('yee', 'Publish'),
+                        Url::to(['bulk-deactivate']) => Yii::t('yee', 'Unpublish'),
                         Url::to(['bulk-delete']) => Yii::t('yii', 'Delete'),
                     ]
                 ],
@@ -78,10 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterInputOptions' => [],
                         'value' => function (Page $model) {
                             return Html::a($model->author->username,
-                                ['user/view', 'id' => $model->created_by],
+                                ['/user/default/view', 'id' => $model->created_by],
                                 ['data-pjax' => 0]);
                         },
                         'format' => 'raw',
+                        'visible' => User::hasPermission('viewUsers'),
                         'options' => ['style' => 'width:180px'],
                     ],
                     [
