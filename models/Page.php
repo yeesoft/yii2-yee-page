@@ -49,6 +49,11 @@ class Page extends ActiveRecord implements OwnerAccess
     public function init()
     {
         parent::init();
+
+        if ($this->isNewRecord && $this->className() == 'yeesoft\page\models\Page') {
+            $this->published_at = time();
+        }
+
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'updateRevision']);
     }
 
@@ -133,32 +138,47 @@ class Page extends ActiveRecord implements OwnerAccess
 
     public function getPublishedDate()
     {
-        return date(Yii::$app->settings->get('general.dateformat'), ($this->isNewRecord) ? time() : $this->published_at);
+        return Yii::$app->formatter->asDate(($this->isNewRecord) ? time() : $this->published_at);
     }
 
     public function getCreatedDate()
     {
-        return date(Yii::$app->settings->get('general.dateformat'), ($this->isNewRecord) ? time() : $this->created_at);
+        return Yii::$app->formatter->asDate(($this->isNewRecord) ? time() : $this->created_at);
     }
 
     public function getUpdatedDate()
     {
-        return date(Yii::$app->settings->get('general.dateformat'), ($this->isNewRecord) ? time() : $this->updated_at);
+        return Yii::$app->formatter->asDate(($this->isNewRecord) ? time() : $this->updated_at);
     }
 
     public function getPublishedTime()
     {
-        return date(Yii::$app->settings->get('general.timeformat'), ($this->isNewRecord) ? time() : $this->published_at);
+        return Yii::$app->formatter->asTime(($this->isNewRecord) ? time() : $this->published_at);
     }
 
     public function getCreatedTime()
     {
-        return date(Yii::$app->settings->get('general.timeformat'), ($this->isNewRecord) ? time() : $this->created_at);
+        return Yii::$app->formatter->asTime(($this->isNewRecord) ? time() : $this->created_at);
     }
 
     public function getUpdatedTime()
     {
-        return date(Yii::$app->settings->get('general.timeformat'), ($this->isNewRecord) ? time() : $this->updated_at);
+        return Yii::$app->formatter->asTime(($this->isNewRecord) ? time() : $this->updated_at);
+    }
+
+    public function getPublishedDatetime()
+    {
+        return "{$this->publishedDate} {$this->publishedTime}";
+    }
+
+    public function getCreatedDatetime()
+    {
+        return "{$this->createdDate} {$this->createdTime}";
+    }
+
+    public function getUpdatedDatetime()
+    {
+        return "{$this->updatedDate} {$this->updatedTime}";
     }
 
     public function getStatusText()

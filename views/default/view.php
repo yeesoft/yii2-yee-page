@@ -1,8 +1,6 @@
 <?php
 
 use yeesoft\helpers\Html;
-use yeesoft\models\User;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model yeesoft\page\models\Page */
