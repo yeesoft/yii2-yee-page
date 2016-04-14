@@ -23,7 +23,7 @@ class PageModule extends \yii\base\Module
 
     public $controllerNamespace = 'yeesoft\page\controllers';
     public $viewList;
-    public $layoutsList;
+    public $layoutList;
 
     /**
      * Default views and layouts
