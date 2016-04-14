@@ -17,6 +17,8 @@ class m150731_150101_create_page_table extends Migration
             'id' => 'pk',
             'slug' => Schema::TYPE_STRING . '(200) NOT NULL DEFAULT ""',
             'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "0" COMMENT "0-pending,1-published"',
+            'view' => Schema::TYPE_STRING . "(255) NOT NULL DEFAULT 'page'",
+            'layout' => Schema::TYPE_STRING . "(255) NOT NULL DEFAULT 'main'",
             'comment_status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-closed,1-open"',
             'published_at' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
             'created_by' => Schema::TYPE_INTEGER . ' DEFAULT NULL',

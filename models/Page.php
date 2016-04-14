@@ -18,6 +18,8 @@ use yii\db\ActiveRecord;
  * @property string $slug
  * @property string $title
  * @property integer $status
+ * @property integer $view
+ * @property integer $layout
  * @property integer $comment_status
  * @property string $content
  * @property string $published_at
@@ -88,7 +90,7 @@ class Page extends ActiveRecord implements OwnerAccess
         return [
             [['title', 'content'], 'required'],
             [['created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
-            [['title', 'content'], 'string'],
+            [['title', 'content', 'view', 'layout'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['slug'], 'string', 'max' => 200],
             ['published_at', 'date', 'timestampAttribute' => 'published_at', 'format' => 'yyyy-MM-dd'],
