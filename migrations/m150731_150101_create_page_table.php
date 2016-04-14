@@ -6,7 +6,7 @@ use yii\db\Schema;
 class m150731_150101_create_page_table extends Migration
 {
 
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -17,8 +17,6 @@ class m150731_150101_create_page_table extends Migration
             'id' => 'pk',
             'slug' => Schema::TYPE_STRING . '(200) NOT NULL DEFAULT ""',
             'status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "0" COMMENT "0-pending,1-published"',
-            'view' => Schema::TYPE_STRING . "(255) NOT NULL DEFAULT 'page'",
-            'layout' => Schema::TYPE_STRING . "(255) NOT NULL DEFAULT 'main'",
             'comment_status' => Schema::TYPE_INTEGER . '(1) unsigned NOT NULL DEFAULT "1" COMMENT "0-closed,1-open"',
             'published_at' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
             'created_by' => Schema::TYPE_INTEGER . ' DEFAULT NULL',
@@ -48,7 +46,7 @@ class m150731_150101_create_page_table extends Migration
         $this->addForeignKey('fk_page_lang', 'page_lang', 'page_id', 'page', 'id', 'CASCADE', 'CASCADE');
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropForeignKey('fk_page_created_by', 'page');
         $this->dropForeignKey('fk_page_updated_by', 'page');
