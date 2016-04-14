@@ -106,6 +106,11 @@ use yii\jui\DatePicker;
                         <?php endif; ?>
 
                         <?= $form->field($model, 'comment_status')->dropDownList(Page::getCommentStatusList(), ['class' => '']) ?>
+
+                        <?= $form->field($model, 'view')->dropDownList($this->context->module->viewList, ['class' => '']) ?>
+
+                        <?= $form->field($model, 'layout')->dropDownList($this->context->module->layoutList, ['class' => '']) ?>
+                    
                     </div>
                 </div>
             </div>
