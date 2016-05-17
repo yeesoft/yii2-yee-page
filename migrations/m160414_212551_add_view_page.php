@@ -1,20 +1,20 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 class m160414_212551_add_view_page extends Migration
 {
-
+    const PAGE_TABLE = '{{%page}}';
+    
     public function safeUp()
     {
-        $this->addColumn('page', 'view', Schema::TYPE_STRING."(255) NOT NULL DEFAULT 'page'");
-        $this->addColumn('page', 'layout', Schema::TYPE_STRING."(255) NOT NULL DEFAULT 'main'");
+        $this->addColumn(self::PAGE_TABLE, 'view', $this->string(255)->notNull()->defaultValue('page'));
+        $this->addColumn(self::PAGE_TABLE, 'layout', $this->string(255)->notNull()->defaultValue('main'));
     }
 
     public function safeDown()
     {
-        $this->dropColumn('page', 'view');
-        $this->dropColumn('page', 'layout');
+        $this->dropColumn(self::PAGE_TABLE, 'view');
+        $this->dropColumn(self::PAGE_TABLE, 'layout');
     }
 }

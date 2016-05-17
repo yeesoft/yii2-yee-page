@@ -9,7 +9,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use yeesoft\db\ActiveRecord;
 
 /**
  * This is the model class for table "page".
@@ -42,7 +42,7 @@ class Page extends ActiveRecord implements OwnerAccess
      */
     public static function tableName()
     {
-        return 'page';
+        return '{{%page}}';
     }
 
     /**
@@ -113,7 +113,7 @@ class Page extends ActiveRecord implements OwnerAccess
             'comment_status' => Yii::t('yee', 'Comment Status'),
             'content' => Yii::t('yee', 'Content'),
             'published_at' => Yii::t('yee', 'Published'),
-            'created_at' => Yii::t('yee', 'Created'), '',
+            'created_at' => Yii::t('yee', 'Created'),
             'updated_at' => Yii::t('yee', 'Updated'),
             'revision' => Yii::t('yee', 'Revision'),
         ];
