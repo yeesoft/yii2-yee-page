@@ -116,6 +116,8 @@ class Page extends ActiveRecord implements OwnerAccess
             'created_at' => Yii::t('yee', 'Created'),
             'updated_at' => Yii::t('yee', 'Updated'),
             'revision' => Yii::t('yee', 'Revision'),
+            'view' => Yii::t('yee', 'View'),
+            'layout' => Yii::t('yee', 'Layout'),
         ];
     }
 
