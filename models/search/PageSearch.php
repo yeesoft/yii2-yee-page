@@ -25,6 +25,11 @@ class PageSearch extends Page
             [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
+    
+    public function formName()
+    {
+        return '';
+    }
 
     /**
      * @inheritdoc

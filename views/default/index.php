@@ -1,13 +1,11 @@
 <?php
 
-use yeesoft\grid\GridPageSize;
-use yeesoft\grid\GridQuickLinks;
-use yeesoft\grid\GridView;
-use yeesoft\helpers\Html;
-use yeesoft\models\User;
-use yeesoft\page\models\Page;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yeesoft\models\User;
+use yeesoft\helpers\Html;
+use yeesoft\grid\GridView;
+use yeesoft\page\models\Page;
 
 /* @var $this yii\web\View */
 /* @var $searchModel yeesoft\page\models\search\PageSearch */
@@ -21,38 +19,29 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/page/defa
 
 <div class="box box-primary">
     <div class="box-body">
-        <div class="row">
-            <div class="col-sm-6" style="margin-bottom: 10px">
-                <?=
-                GridQuickLinks::widget([
-                    'model' => Page::className(),
-                    'searchModel' => $searchModel,
-                    'labels' => [
-                        'all' => Yii::t('yee', 'All'),
-                        'active' => Yii::t('yee', 'Published'),
-                        'inactive' => Yii::t('yee', 'Pending'),
-                    ],
-                ])
-                ?>
-            </div>
-            <div class="col-sm-6 text-right">
-                
-            </div>
-        </div>
-
-        <?php Pjax::begin(['id' => 'page-grid-pjax']) ?>
+        <?php $pjax = Pjax::begin() ?>
         <?=
         GridView::widget([
-            'id' => 'page-grid',
+            //'id' => 'page-grid',
+            'pjaxId' => $pjax->id,
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            'bulkActionOptions' => [
-                'gridId' => 'page-grid',
+            //'bulkActions' => false,
+            'bulkActions' => [
                 'actions' => [
                     Url::to(['bulk-activate']) => Yii::t('yee', 'Publish'),
                     Url::to(['bulk-deactivate']) => Yii::t('yee', 'Unpublish'),
                     Url::to(['bulk-delete']) => Yii::t('yii', 'Delete'),
                 ]
+            ],
+            'extraActions' => Html::a('Empty Trash', ['', '#' => 'empty-trash'], ['class' => 'btn btn-sm btn-default']),
+            //'quickFilters' => false,
+            'quickFilters' => [
+                'filters' => [
+                    Yii::t('yee', 'All') => [],
+                    Yii::t('yee', 'Published') => ['status' => 1],
+                    Yii::t('yee', 'Pending') => ['status' => 0],
+                ],
             ],
             'columns' => [
                 ['class' => 'yeesoft\grid\CheckboxColumn', 'options' => ['style' => 'width:10px'], 'displayFilter' => false],

@@ -2,7 +2,7 @@
 
 namespace yeesoft\page\models;
 
-use omgdef\multilingual\MultilingualTrait;
+use yeesoft\multilingual\db\MultilingualTrait;
 
 /**
  * This is the ActiveQuery class for [[Page]].

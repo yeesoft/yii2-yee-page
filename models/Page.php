@@ -2,14 +2,15 @@
 
 namespace yeesoft\page\models;
 
-use yeesoft\behaviors\MultilingualBehavior;
-use yeesoft\models\OwnerAccess;
-use yeesoft\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yeesoft\db\ActiveRecord;
+use yeesoft\models\User;
+use yeesoft\models\OwnerAccess;
+use yeesoft\behaviors\MultilingualBehavior;
+use yeesoft\multilingual\db\MultilingualLabelsTrait;
 
 /**
  * This is the model class for table "page".
@@ -31,6 +32,8 @@ use yeesoft\db\ActiveRecord;
  */
 class Page extends ActiveRecord implements OwnerAccess
 {
+
+    use MultilingualLabelsTrait;
 
     const STATUS_PENDING = 0;
     const STATUS_PUBLISHED = 1;
@@ -73,8 +76,7 @@ class Page extends ActiveRecord implements OwnerAccess
             ],
             'multilingual' => [
                 'class' => MultilingualBehavior::className(),
-                'langForeignKey' => 'page_id',
-                'tableName' => "{{%page_lang}}",
+                'languageForeignKey' => 'page_id',
                 'attributes' => [
                     'title', 'content',
                 ]
@@ -106,7 +108,7 @@ class Page extends ActiveRecord implements OwnerAccess
         return [
             'id' => Yii::t('yee', 'ID'),
             'created_by' => Yii::t('yee', 'Author'),
-            'updated_by' => Yii::t('yee', 'Updated By'),
+            'updatedByName' => Yii::t('yee', 'Updated By'),
             'slug' => Yii::t('yee', 'Slug'),
             'title' => Yii::t('yee', 'Title'),
             'status' => Yii::t('yee', 'Status'),
@@ -114,7 +116,9 @@ class Page extends ActiveRecord implements OwnerAccess
             'content' => Yii::t('yee', 'Content'),
             'published_at' => Yii::t('yee', 'Published'),
             'created_at' => Yii::t('yee', 'Created'),
+            'createdDatetime' => Yii::t('yee', 'Created'),
             'updated_at' => Yii::t('yee', 'Updated'),
+            'updatedDatetime' => Yii::t('yee', 'Updated'),
             'revision' => Yii::t('yee', 'Revision'),
             'view' => Yii::t('yee', 'View'),
             'layout' => Yii::t('yee', 'Layout'),
@@ -133,6 +137,11 @@ class Page extends ActiveRecord implements OwnerAccess
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+    
+    public function getUpdatedByName()
+    {
+        return $this->updatedBy->username;
     }
 
     public function getUpdatedBy()
@@ -258,4 +267,5 @@ class Page extends ActiveRecord implements OwnerAccess
     {
         return 'created_by';
     }
+
 }
