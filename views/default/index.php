@@ -22,11 +22,9 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/page/defa
         <?php $pjax = Pjax::begin() ?>
         <?=
         GridView::widget([
-            //'id' => 'page-grid',
             'pjaxId' => $pjax->id,
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-            //'bulkActions' => false,
             'bulkActions' => [
                 'actions' => [
                     Url::to(['bulk-activate']) => Yii::t('yee', 'Publish'),
@@ -34,8 +32,6 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/page/defa
                     Url::to(['bulk-delete']) => Yii::t('yii', 'Delete'),
                 ]
             ],
-            'extraActions' => Html::a('Empty Trash', ['', '#' => 'empty-trash'], ['class' => 'btn btn-sm btn-default']),
-            //'quickFilters' => false,
             'quickFilters' => [
                 'filters' => [
                     Yii::t('yee', 'All') => [],
@@ -48,7 +44,7 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/page/defa
                 [
                     'class' => 'yeesoft\grid\columns\TitleActionColumn',
                     'title' => function (Page $model) {
-                        return Html::a($model->title, ['/page/default/view', 'id' => $model->id], ['data-pjax' => 0]);
+                        return Html::a($model->title, ['view', 'id' => $model->id], ['data-pjax' => 0]);
                     },
                     'filterOptions' => ['colspan' => 2],
                 ],
