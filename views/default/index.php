@@ -8,7 +8,7 @@ use yeesoft\grid\GridView;
 use yeesoft\page\models\Page;
 
 /* @var $this yii\web\View */
-/* @var $searchModel yeesoft\page\models\search\PageSearch */
+/* @var $searchModel yeesoft\page\models\PageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/page', 'Pages');

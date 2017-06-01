@@ -10,7 +10,7 @@ use yeesoft\controllers\admin\BaseController;
 class DefaultController extends BaseController
 {
     public $modelClass = 'yeesoft\page\models\Page';
-    public $modelSearchClass = 'yeesoft\page\models\search\PageSearch';
+    public $modelSearchClass = 'yeesoft\page\models\PageSearch';
 
     protected function getRedirectPage($action, $model = null)
     {

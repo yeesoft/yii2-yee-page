@@ -1,8 +1,7 @@
 <?php
 
-namespace yeesoft\page\models\search;
+namespace yeesoft\page\models;
 
-use yeesoft\page\models\Page;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -25,7 +24,10 @@ class PageSearch extends Page
             [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
-    
+
+    /**
+     * @inheritdoc
+     */
     public function formName()
     {
         return '';
@@ -85,8 +87,8 @@ class PageSearch extends Page
         $query->andFilterWhere([($this->published_at_operand) ? $this->published_at_operand : '=', 'published_at', ($this->published_at) ? strtotime($this->published_at) : null]);
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content]);
+                ->andFilterWhere(['like', 'title', $this->title])
+                ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

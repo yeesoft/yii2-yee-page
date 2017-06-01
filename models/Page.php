@@ -55,7 +55,7 @@ class Page extends ActiveRecord implements OwnerAccess
     {
         parent::init();
 
-        if ($this->isNewRecord && $this->className() == 'yeesoft\page\models\Page') {
+        if ($this->isNewRecord && $this->className() == Page::className()) {
             $this->published_at = time();
         }
 
