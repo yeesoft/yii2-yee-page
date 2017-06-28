@@ -12,9 +12,9 @@ use yeesoft\page\models\Page;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('yee/page', 'Pages');
-$this->params['description'] = 'YeeCMS 0.2.0';
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['/page/default/create'], ['class' => 'btn btn-sm btn-primary']);
+$this->params['description'] = 'YeeCMS 0.2.0';
+$this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], ['class' => 'btn btn-sm btn-primary']);
 ?>
 
 <div class="box box-primary">
