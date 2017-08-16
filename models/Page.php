@@ -51,42 +51,6 @@ class Page extends ActiveRecord implements OwnerAccess
     /**
      * @inheritdoc
      */
-    public function init()
-    {
-        parent::init();
-
-        if ($this->isNewRecord && $this->className() == Page::className()) {
-            $this->published_at = time();
-        }
-
-        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'updateRevision']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-            BlameableBehavior::className(),
-            'sluggable' => [
-                'class' => SluggableBehavior::className(),
-                'attribute' => 'title',
-            ],
-            'multilingual' => [
-                'class' => MultilingualBehavior::className(),
-                'languageForeignKey' => 'page_id',
-                'attributes' => [
-                    'title', 'content',
-                ]
-            ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -97,6 +61,7 @@ class Page extends ActiveRecord implements OwnerAccess
             [['slug'], 'string', 'max' => 200],
             ['published_at', 'date', 'timestampAttribute' => 'published_at', 'format' => 'yyyy-MM-dd'],
             ['published_at', 'default', 'value' => time()],
+            [['slug'], 'unique'],
         ];
     }
 
@@ -127,6 +92,43 @@ class Page extends ActiveRecord implements OwnerAccess
 
     /**
      * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->isNewRecord && $this->className() == Page::className()) {
+            $this->published_at = time();
+        }
+
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'updateRevision']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            BlameableBehavior::className(),
+            'sluggable' => [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+                'ensureUnique' => true,
+            ],
+            'multilingual' => [
+                'class' => MultilingualBehavior::className(),
+                'languageForeignKey' => 'page_id',
+                'attributes' => [
+                    'title', 'content',
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
      * @return PageQuery the active query used by this AR class.
      */
     public static function find()
@@ -138,7 +140,7 @@ class Page extends ActiveRecord implements OwnerAccess
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
-    
+
     public function getUpdatedByName()
     {
         return $this->updatedBy->username;
@@ -266,6 +268,12 @@ class Page extends ActiveRecord implements OwnerAccess
     public static function getOwnerField()
     {
         return 'created_by';
+    }
+
+    public function getShortContent($delimiter = '<!-- pagebreak -->', $allowableTags = '<a>')
+    {
+        $content = explode($delimiter, $this->content);
+        return strip_tags($content[0], $allowableTags);
     }
 
 }

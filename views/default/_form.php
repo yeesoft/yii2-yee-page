@@ -22,7 +22,7 @@ use yeesoft\media\widgets\TinyMce;
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'slug')->slugInput(['maxlength' => true], 'title') ?>
 
                 <?= $form->field($model, 'content')->widget(TinyMce::className()); ?>
             </div>

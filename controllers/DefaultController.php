@@ -2,16 +2,20 @@
 
 namespace yeesoft\page\controllers;
 
-use yeesoft\controllers\admin\BaseController;
+use yeesoft\controllers\CrudController;
 
 /**
  * Controller implements the CRUD actions for Page model.
  */
-class DefaultController extends BaseController
+class DefaultController extends CrudController
 {
+
     public $modelClass = 'yeesoft\page\models\Page';
     public $modelSearchClass = 'yeesoft\page\models\PageSearch';
 
+    /**
+     * @inheritdoc
+     */
     protected function getRedirectPage($action, $model = null)
     {
         switch ($action) {
@@ -25,4 +29,5 @@ class DefaultController extends BaseController
                 return parent::getRedirectPage($action, $model);
         }
     }
+
 }
