@@ -89,6 +89,8 @@ class PageSearch extends Page
         $query->andFilterWhere(['like', 'slug', $this->slug])
                 ->andFilterWhere(['like', 'title', $this->title])
                 ->andFilterWhere(['like', 'content', $this->content]);
+        
+        $query->applyFilters();
 
         return $dataProvider;
     }
