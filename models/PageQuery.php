@@ -2,7 +2,7 @@
 
 namespace yeesoft\page\models;
 
-use yeesoft\db\ActiveQueryFilterTrait;
+use yeesoft\db\ActiveQuery;
 use yeesoft\multilingual\db\MultilingualTrait;
 
 /**
@@ -10,11 +10,10 @@ use yeesoft\multilingual\db\MultilingualTrait;
  *
  * @see Page
  */
-class PageQuery extends \yii\db\ActiveQuery
+class PageQuery extends ActiveQuery
 {
 
     use MultilingualTrait;
-    use ActiveQueryFilterTrait;
 
     public function active()
     {

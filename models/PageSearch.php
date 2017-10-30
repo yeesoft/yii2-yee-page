@@ -51,7 +51,7 @@ class PageSearch extends Page
      */
     public function search($params)
     {
-        $query = Page::find()->joinWith('translations');
+        $query = parent::find()->joinWith('translations');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

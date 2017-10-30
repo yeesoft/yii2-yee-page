@@ -8,7 +8,6 @@ use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yeesoft\db\ActiveRecord;
 use yeesoft\models\User;
-use yeesoft\models\OwnerAccess;
 use yeesoft\behaviors\MultilingualBehavior;
 use yeesoft\multilingual\db\MultilingualLabelsTrait;
 
@@ -30,7 +29,7 @@ use yeesoft\multilingual\db\MultilingualLabelsTrait;
  * @property integer $updated_by
  * @property integer $revision
  */
-class Page extends ActiveRecord implements OwnerAccess
+class Page extends ActiveRecord
 {
 
     use MultilingualLabelsTrait;
