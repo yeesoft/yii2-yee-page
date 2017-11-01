@@ -16,13 +16,13 @@ Installation
 - Either run
 
 ```
-composer require --prefer-dist yeesoft/yii2-yee-page "~0.1.0"
+composer require --prefer-dist yeesoft/yii2-yee-page "~0.2.0"
 ```
 
 or add
 
 ```
-"yeesoft/yii2-yee-page": "~0.1.0"
+"yeesoft/yii2-yee-page": "~0.2.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -44,8 +44,3 @@ Configuration
 	],
 ],
 ```
-
-Screenshots
--------  
-
-[Flickr - Yee CMS Post Module](https://www.flickr.com/photos/134050409@N07/sets/72157656324703598)

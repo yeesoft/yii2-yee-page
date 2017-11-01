@@ -251,24 +251,6 @@ class Page extends ActiveRecord
         ];
     }
 
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getFullAccessPermission()
-    {
-        return 'fullPageAccess';
-    }
-
-    /**
-     *
-     * @inheritdoc
-     */
-    public static function getOwnerField()
-    {
-        return 'created_by';
-    }
-
     public function getShortContent($delimiter = '<!-- pagebreak -->', $allowableTags = '<a>')
     {
         $content = explode($delimiter, $this->content);

@@ -12,8 +12,6 @@ use yii\data\ActiveDataProvider;
 class PageSearch extends Page
 {
 
-    public $published_at_operand;
-
     /**
      * @inheritdoc
      */
@@ -21,7 +19,7 @@ class PageSearch extends Page
     {
         return [
             [['id', 'created_by', 'updated_by', 'status', 'comment_status', 'revision'], 'integer'],
-            [['published_at_operand', 'slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
+            [['slug', 'title', 'content', 'published_at', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -84,12 +82,13 @@ class PageSearch extends Page
             'revision' => $this->revision,
         ]);
 
-        $query->andFilterWhere([($this->published_at_operand) ? $this->published_at_operand : '=', 'published_at', ($this->published_at) ? strtotime($this->published_at) : null]);
+
+        $query->andFilterWhere(['=', 'published_at', ($this->published_at) ? strtotime($this->published_at) : null]);
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
                 ->andFilterWhere(['like', 'title', $this->title])
                 ->andFilterWhere(['like', 'content', $this->content]);
-        
+
         $query->applyFilters();
 
         return $dataProvider;

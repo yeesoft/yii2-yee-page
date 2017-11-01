@@ -2,11 +2,12 @@
 
 use yii\db\Migration;
 
-class m150731_150101_create_page_table extends Migration
+class m150731_150101_page_table extends Migration
 {
+
     const PAGE_TABLE = '{{%page}}';
     const PAGE_LANG_TABLE = '{{%page_lang}}';
-    
+
     public function safeUp()
     {
         $tableOptions = null;
@@ -19,6 +20,8 @@ class m150731_150101_create_page_table extends Migration
             'slug' => $this->string(255)->notNull(),
             'status' => $this->integer(1)->notNull()->defaultValue(0)->comment('0-pending,1-published'),
             'comment_status' => $this->integer(1)->notNull()->defaultValue(1)->comment('0-closed,1-open'),
+            'view' => $this->string(255)->notNull()->defaultValue('page'),
+            'layout' => $this->string(255)->notNull()->defaultValue('main'),
             'published_at' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
@@ -29,8 +32,8 @@ class m150731_150101_create_page_table extends Migration
 
         $this->createIndex('page_slug', self::PAGE_TABLE, 'slug');
         $this->createIndex('page_status', self::PAGE_TABLE, 'status');
-        //$this->addForeignKey('fk_page_created_by', self::PAGE_TABLE, 'created_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
-        //$this->addForeignKey('fk_page_updated_by', self::PAGE_TABLE, 'updated_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
+        $this->addForeignKey('fk_page_created_by', self::PAGE_TABLE, 'created_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
+        $this->addForeignKey('fk_page_updated_by', self::PAGE_TABLE, 'updated_by', '{{%user}}', 'id', 'SET NULL', 'CASCADE');
 
         $this->createTable(self::PAGE_LANG_TABLE, [
             'id' => $this->primaryKey(),
@@ -53,4 +56,5 @@ class m150731_150101_create_page_table extends Migration
         $this->dropTable(self::PAGE_LANG_TABLE);
         $this->dropTable(self::PAGE_TABLE);
     }
+
 }

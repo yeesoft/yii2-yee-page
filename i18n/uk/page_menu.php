@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'admin-menu-page-index' => 'Сторінки',
+    'admin-menu-page' => 'Сторінки',
 ];

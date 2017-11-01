@@ -62,7 +62,7 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                     'class' => 'yeesoft\grid\columns\StatusColumn',
                     'attribute' => 'status',
                     'optionsArray' => Page::getStatusOptionsList(),
-                    'options' => ['style' => 'width:60px'],
+                    'options' => ['style' => 'width:120px'],
                 ],
                 [
                     'class' => 'yeesoft\grid\columns\DateFilterColumn',
@@ -73,7 +73,7 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                                 . $model->publishedDate . '</span>';
                     },
                     'format' => 'raw',
-                    'options' => ['style' => 'width:150px'],
+                    'options' => ['style' => 'width:120px'],
                 ],
             ],
         ]);
