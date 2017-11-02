@@ -8,6 +8,9 @@ class m150825_220620_page_permissions extends PermissionsMigration
     public function safeUp()
     {
         $this->addPermissionsGroup('page-management', 'Page Management');
+        
+        $this->addModel('page', 'Page', yeesoft\page\models\Page::class);
+                
         parent::safeUp();
     }
 

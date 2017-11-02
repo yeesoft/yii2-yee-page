@@ -13,6 +13,6 @@ class m150731_150644_page_menu extends Migration
 
     public function down()
     {
-        $this->delete('{{%menu_link}}', ['like', 'id', 'page']);
+        $this->delete('{{%menu_link}}', ['like', 'id', 'admin-menu-page']);
     }
 }
