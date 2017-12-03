@@ -55,7 +55,7 @@ $this->params['header-content'] = Html::a(Yii::t('yee', 'Add New'), ['create'], 
                         return Html::a($model->author->username, ['/user/default/update', 'id' => $model->created_by], ['data-pjax' => 0]);
                     },
                     'format' => 'raw',
-                    'visible' => User::hasPermission('viewUsers'),
+                    'visible' => Yii::$app->user->can('view-users'),
                     'options' => ['style' => 'width:180px'],
                 ],
                 [

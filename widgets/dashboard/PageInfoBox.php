@@ -19,7 +19,7 @@ class PageInfoBox extends InfoBox
 
     public function getHasAccess()
     {
-        return User::hasPermission('viewPages');
+        return Yii::$app->user->can('view-pages');
     }
 
     public function getTitle()

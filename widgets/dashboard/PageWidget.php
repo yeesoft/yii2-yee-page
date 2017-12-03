@@ -48,7 +48,7 @@ class PageWidget extends DashboardWidget
     public function init()
     {
         parent::init();
-        $this->visible = User::hasPermission('viewPages');
+        $this->visible = Yii::$app->user->can('view-pages');
     }
 
     public function renderContent()
