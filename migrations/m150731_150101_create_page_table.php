@@ -47,8 +47,8 @@ class m150731_150101_create_page_table extends Migration
 
     public function safeDown()
     {
-        $this->dropForeignKey('fk_page_created_by', self::PAGE_TABLE);
-        $this->dropForeignKey('fk_page_updated_by', self::PAGE_TABLE);
+        //$this->dropForeignKey('fk_page_created_by', self::PAGE_TABLE);
+        //$this->dropForeignKey('fk_page_updated_by', self::PAGE_TABLE);
         $this->dropForeignKey('fk_page_lang', self::PAGE_LANG_TABLE);
         $this->dropTable(self::PAGE_LANG_TABLE);
         $this->dropTable(self::PAGE_TABLE);
